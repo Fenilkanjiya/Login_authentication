@@ -1,25 +1,54 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const patientsUrl = "http://localhost:3000/data";
 
 const Patients = () => {
   const [patientsdata, setPatientsData] = useState([]);
+  const [filterDataValue, setFilterDataValue] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 5;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = patientsdata.slice(firstIndex, lastIndex);
-  const numberOfPage = Math.ceil(patientsdata.length / recordsPerPage);
+  const records = filterDataValue.slice(firstIndex, lastIndex);
+  const numberOfPage = Math.ceil(filterDataValue.length / recordsPerPage);
   const numbers = [...Array(numberOfPage + 1).keys()].slice(1);
+
+  const navigate = useNavigate();
 
   const getPatients = async () => {
     await axios.get(patientsUrl).then((res) => {
       setPatientsData(res.data);
+      setFilterDataValue(res.data);
     });
   };
 
+  const handlerFilter = async (e) => {
+    let value = e.target.value;
+    let filterData = patientsdata.filter(
+      (element) => element.patient.referral_program === value
+    );
+    if (!value) {
+      setFilterDataValue(patientsdata);
+    } else {
+      setFilterDataValue(filterData);
+    }
+  };
+
+  const handlerFilterGender = (e) => {
+    let filteredValue = e.target.value;
+
+    let filterData = patientsdata.filter(
+      (element) => element.patient.gender === filteredValue
+    );
+    if (!filteredValue) {
+      setFilterDataValue(patientsdata);
+    } else {
+      setFilterDataValue(filterData);
+    }
+    }
   useEffect(() => {
     getPatients();
   }, []);
@@ -35,69 +64,41 @@ const Patients = () => {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  const handlerRowClick = (value) => {
+    navigate(`/patient/${value.id}`, { state: { data: value } });
+  };
   return (
     <>
       <h1>Patients</h1>
       <hr />
       <div className="container">
         <div className="row">
-          <div className="col-lg-4 col-md-4 col-12">
-            <div className="dropdown">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Referral_program
-              </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    UCLA Health
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    DTC_Proactive
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Outreach
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div className="col-lg-4 col-md-4 col-12 me-5">
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={handlerFilter}
+              // defaultValue={encouterData}
+            >
+              <option value="">referral_program</option>
+              <option value=" UCLA Health">UCLA Health</option>
+              <option value="DTC_Proactive">DTC_Proactive</option>
+              <option value="outreach">outreach</option>
+            </select>
           </div>
-          <div className="col-lg-5 col-md-5 col-12">
-            <div className="dropdown">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                gender
-              </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Female
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Male
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Other
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div className="col-lg-4 col-md-4 col-12">
+          <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={handlerFilterGender}
+              // defaultValue={encouterData}
+            >
+              <option value="">gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+            </select>
           </div>
         </div>
       </div>
@@ -113,15 +114,15 @@ const Patients = () => {
               <th scope="col">referral Program</th>
             </tr>
           </thead>
-          {records.map((val) => {
+          {records.map((value) => {
             return (
               <>
                 <tbody>
-                  <tr key={val.id}>
-                    <td>{val.patient.email}</td>
-                    <td>{val.patient.address.home.full_name}</td>
-                    <td>{val.patient.gender}</td>
-                    <td>{val.patient.referral_program}</td>
+                  <tr key={value.id} onClick={() => handlerRowClick(value)}>
+                    <td>{value.patient.email}</td>
+                    <td>{value.patient.address.home.full_name}</td>
+                    <td>{value.patient.gender}</td>
+                    <td>{value.patient.referral_program}</td>
                   </tr>
                 </tbody>
               </>
