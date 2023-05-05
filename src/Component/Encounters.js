@@ -81,8 +81,8 @@ const Encounter = () => {
             </select>
           </div>
           <div className="col-lg-5 col-md-5 col-12">
-            <input type="date" className="btn btn-primary me-3" selected={startDate}/>
-            <input type="date" className="btn btn-primary"  onSelect={endDate}/>
+            <input type="date" className="btn btn-primary me-3" />
+            <input type="date" className="btn btn-primary"/>
           </div>
         </div>
       </div>
