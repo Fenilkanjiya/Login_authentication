@@ -42,9 +42,9 @@ const Patients = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-4 col-md-4 col-12">
-            <div class="dropdown">
+            <div className="dropdown">
               <button
-                class="btn btn-secondary dropdown-toggle"
+                className="btn btn-secondary dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -71,9 +71,9 @@ const Patients = () => {
             </div>
           </div>
           <div className="col-lg-5 col-md-5 col-12">
-            <div class="dropdown">
+            <div className="dropdown">
               <button
-                class="btn btn-secondary dropdown-toggle"
+                className="btn btn-secondary dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
