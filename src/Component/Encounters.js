@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axois from "axios";
-// import Details from "./Details";
 import { Link, useNavigate } from "react-router-dom";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 const encounterUrl = "http://localhost:3000/data";
 
@@ -16,6 +18,9 @@ const Encounter = () => {
   const records = filterDataValue.slice(firstIndex, lastIndex);
   const numberOfPage = Math.ceil(filterDataValue.length / recordsPerPage);
   const numbers = [...Array(numberOfPage + 1).keys()].slice(1);
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const navigate = useNavigate();
 
@@ -39,6 +44,7 @@ const Encounter = () => {
       setFilterDataValue(filterData);
     }
   };
+
   useEffect(() => {
     getEncouter();
   }, []);
@@ -57,6 +63,27 @@ const Encounter = () => {
 
   const handleRowClick = (value) => {
     navigate(`/encounter/${value.id}`, { state: { data: value } });
+  };
+
+  const handleSelect = (date) => {
+  
+    let filtred = encouterData.filter((product) => {
+      let productDate = new Date(product.date_of_service);
+      return (
+        productDate >= date.selection.startDate &&
+        productDate <= date.selection.endDate
+      );
+    });
+    console.log(filtred)
+    setStartDate(date.selection.startDate);
+    setEndDate(date.selection.endDate);
+    setFilterDataValue(filtred);
+  };
+
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: "selection",
   };
 
   return (
@@ -81,8 +108,14 @@ const Encounter = () => {
             </select>
           </div>
           <div className="col-lg-5 col-md-5 col-12">
-            <input type="date" className="btn btn-primary me-3" />
-            <input type="date" className="btn btn-primary"/>
+            {/* <input type="date" className="btn btn-primary me-3" /> */}
+            {/* <input type="date" className="btn btn-primary"/> */}
+            <DateRangePicker
+              ranges={[selectionRange]}
+              onChange={handleSelect}
+              // selected={startDate}
+              // onChange={handlerDateFilter}
+            />
           </div>
         </div>
       </div>
