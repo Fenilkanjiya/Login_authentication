@@ -72,7 +72,6 @@ const Encounter = () => {
         productDate <= date.selection.endDate
       );
     });
-    console.log(filtred);
     setStartDate(date.selection.startDate);
     setEndDate(date.selection.endDate);
     setFilterDataValue(filtred);
