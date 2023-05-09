@@ -37,7 +37,6 @@ const Encounter = () => {
       (element) => element.consultation_type === value
     );
 
-    // setFilterDataValue(filterData);
     if (!value) {
       setFilterDataValue(encouterData);
     } else {
@@ -66,7 +65,6 @@ const Encounter = () => {
   };
 
   const handleSelect = (date) => {
-  
     let filtred = encouterData.filter((product) => {
       let productDate = new Date(product.date_of_service);
       return (
@@ -74,7 +72,7 @@ const Encounter = () => {
         productDate <= date.selection.endDate
       );
     });
-    console.log(filtred)
+    console.log(filtred);
     setStartDate(date.selection.startDate);
     setEndDate(date.selection.endDate);
     setFilterDataValue(filtred);
@@ -97,7 +95,6 @@ const Encounter = () => {
               className="form-select"
               aria-label="Default select example"
               onChange={handlerFilter}
-              // defaultValue={encouterData}
             >
               <option value="">consultation_type</option>
               <option value="FH Test">FH Test</option>
@@ -108,13 +105,9 @@ const Encounter = () => {
             </select>
           </div>
           <div className="col-lg-5 col-md-5 col-12">
-            {/* <input type="date" className="btn btn-primary me-3" /> */}
-            {/* <input type="date" className="btn btn-primary"/> */}
             <DateRangePicker
               ranges={[selectionRange]}
               onChange={handleSelect}
-              // selected={startDate}
-              // onChange={handlerDateFilter}
             />
           </div>
         </div>
@@ -138,16 +131,7 @@ const Encounter = () => {
               <>
                 <tbody>
                   <tr key={value.id} onClick={() => handleRowClick(value)}>
-                    <td>
-                      {/* <Link
-                        to={{
-                          pathname: `/encounters/${value.id}`,
-                          state: { email: value.consultation_type },
-                        }}
-                      > */}
-                      {formatDate}
-                      {/* </Link> */}
-                    </td>
+                    <td>{formatDate}</td>
                     <td>{value.patient.address.home.full_name}</td>
                     <td>{value.consultation_type}</td>
                   </tr>

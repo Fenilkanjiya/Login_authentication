@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState("");
   const navigate = useNavigate();
-  // const loginUrl = "http://localhost:3000/data";
 
   const handleFetcher = async () => {
     return fetch("http://localhost:3000/loginData")
@@ -30,8 +28,7 @@ const Login = () => {
     return uniqueID;
   }
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
+  const handleSubmit = () => {
     let name1 = userData.find((o) => o.name === name);
     let pass1 = userData.find((o) => o.password === password);
     let uniqueID = generateUniqueID();

@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Component/Login";
@@ -14,7 +13,7 @@ function App() {
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
-    const items = localStorage.getItem('itemValues');
+    const items = localStorage.getItem("itemValues");
     if (items) {
       setLogin(true);
     }
@@ -36,14 +35,12 @@ function App() {
                 <Route path="/encounters" element={<Encounter />} />
                 <Route path="/Encounter/:id" element={<Details />} />
                 <Route path="/patients" element={<Patients />} />
-                <Route path='/patient/:id' element={<Details />} />
+                <Route path="/patient/:id" element={<Details />} />
               </Routes>
             </div>
           </div>
         </>
       )}
-
-      {/* <Details/> */}
     </div>
   );
 }

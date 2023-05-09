@@ -1,16 +1,10 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
-// import  useParams  }from "react-router-dom";
-import Patients from './Patients';
+import { useLocation } from "react-router-dom";
 
 const Details = (props) => {
- 
   const location = useLocation();
-  // const { id } = useParams();
   const rowData = location.state?.data;
-  // const
-  // console.log(rowData);
- 
+
   return (
     <div>
       <h1>{location.pathname} / Patients Details</h1>

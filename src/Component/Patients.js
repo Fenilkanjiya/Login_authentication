@@ -48,7 +48,7 @@ const Patients = () => {
     } else {
       setFilterDataValue(filterData);
     }
-    }
+  };
   useEffect(() => {
     getPatients();
   }, []);
@@ -79,7 +79,6 @@ const Patients = () => {
               className="form-select"
               aria-label="Default select example"
               onChange={handlerFilter}
-              // defaultValue={encouterData}
             >
               <option value="">referral_program</option>
               <option value=" UCLA Health">UCLA Health</option>
@@ -88,11 +87,10 @@ const Patients = () => {
             </select>
           </div>
           <div className="col-lg-4 col-md-4 col-12">
-          <select
+            <select
               className="form-select"
               aria-label="Default select example"
               onChange={handlerFilterGender}
-              // defaultValue={encouterData}
             >
               <option value="">gender</option>
               <option value="female">Female</option>
