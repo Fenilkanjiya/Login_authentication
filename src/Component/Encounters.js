@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import TableForm from "./TableForm";
 
-const encounterUrl = "http://localhost:3000/dataa";
+const encounterUrl = "http://localhost:3000/data";
 
 const Encounter = () => {
   const [encouterData, setEncounterData] = useState([]);
@@ -28,11 +29,11 @@ const Encounter = () => {
     await axois.get(encounterUrl).then((res) => {
       setEncounterData(res.data);
       setFilterDataValue(res.data);
-      console.log(res.data)
+      // console.log(res.data);
     });
   };
 
-  const handlerFilter = async (e) => {
+  const handlerFilter = async (e) => {  
     let value = e.target.value;
     let filterData = encouterData.filter(
       (element) => element.consultation_type === value
@@ -47,7 +48,7 @@ const Encounter = () => {
 
   useEffect(() => {
     getEncouter();
-    setCurrentPage(1)
+    setCurrentPage(1);
   }, []);
 
   const prePage = () => {
@@ -79,12 +80,16 @@ const Encounter = () => {
     setFilterDataValue(filtred);
   };
 
+
   const selectionRange = {
     startDate: startDate,
     endDate: endDate,
     key: "selection",
   };
 
+  console.log("11111", encouterData)
+  
+//  console.log("encounter", data)
   return (
     <>
       <h1>Encounters</h1>
@@ -116,7 +121,7 @@ const Encounter = () => {
       <br />
       <br />
       <section className="container">
-        <table className="table table-striped table-bordered">
+        {/* <table className="table table-striped table-bordered">
           <thead>
             <tr>
               <th scope="col">Date of Service</th>
@@ -124,23 +129,12 @@ const Encounter = () => {
               <th scope="col">Consultation type</th>
             </tr>
           </thead>
-
-          {records.map((value) => {
-            let date = new Date(value.date_of_service);
-            let formatDate = date.toLocaleDateString();
-            return (
-              <>
-                <tbody>
-                  <tr key={value.id} onClick={() => handleRowClick(value)}>
-                    <td>{formatDate}</td>
-                    <td>{value.patient.address.home.full_name}</td>
-                    <td>{value.consultation_type}</td>
-                  </tr>
-                </tbody>
-              </>
-            );
-          })}
-        </table>
+          <tbody>
+            <TableForm records={records} />
+          </tbody>
+        </table> */}
+        {/* <TableForm records={data} /> */}
+        <TableForm records={records} />
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">

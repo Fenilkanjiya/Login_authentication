@@ -8,6 +8,7 @@ import Sidebar from "./Component/Sidebar";
 import Welcome from "./Component/Welcome";
 import Details from "./Component/Details";
 import { useEffect, useState } from "react";
+import TableForm from "./Component/TableForm";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -25,6 +26,7 @@ function App() {
       ) : (
         <>
           <Header />
+          <TableForm/>
           <div className="row">
             <div className="col-lg-2">
               <Sidebar />
