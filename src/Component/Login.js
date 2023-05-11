@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleFetcher = async () => {
-    return fetch("http://localhost:3000/loginData")
+    return await fetch("http://localhost:3000/loginData")
       .then((response) => response.json())
       .then((data) => setUserData(data));
   };
@@ -29,8 +29,8 @@ const Login = () => {
   }
 
   const handleSubmit = () => {
-    let name1 = userData.find((o) => o.name === name);
-    let pass1 = userData.find((o) => o.password === password);
+    let name1 = userData.find((user) => user.name === name);
+    let pass1 = userData.find((user) => user.password === password);
     let uniqueID = generateUniqueID();
     if (name1 && pass1) {
       console.log("Login successful");

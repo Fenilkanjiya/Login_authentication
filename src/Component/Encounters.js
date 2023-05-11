@@ -5,7 +5,7 @@ import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
-const encounterUrl = "http://localhost:3000/data";
+const encounterUrl = "http://localhost:3000/dataa";
 
 const Encounter = () => {
   const [encouterData, setEncounterData] = useState([]);
@@ -28,6 +28,7 @@ const Encounter = () => {
     await axois.get(encounterUrl).then((res) => {
       setEncounterData(res.data);
       setFilterDataValue(res.data);
+      console.log(res.data)
     });
   };
 
@@ -46,6 +47,7 @@ const Encounter = () => {
 
   useEffect(() => {
     getEncouter();
+    setCurrentPage(1)
   }, []);
 
   const prePage = () => {
@@ -153,7 +155,7 @@ const Encounter = () => {
               >
                 <a
                   className="page-link"
-                  href="#"
+                  // href="#"
                   onClick={() => setCurrentPage(i + 1)}
                 >
                   {n}
@@ -162,7 +164,7 @@ const Encounter = () => {
             ))}
 
             <li className="page-item">
-              <a className="page-link" href="#" onClick={nextPage}>
+              <a className="page-link" onClick={nextPage}>
                 Next
               </a>
             </li>

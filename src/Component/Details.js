@@ -1,13 +1,31 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+import "./Breadcrums.css";
 
 const Details = () => {
   const location = useLocation();
   const rowData = location.state?.data;
 
+  const path = location.pathname.startsWith("/encounter")
+    ? "/encounters"
+    : "/patients";
+
   return (
     <div>
-      <h1>{location.pathname} / Patients Details</h1>
+      <h1>
+        <Link
+          to={path}
+          className="breadcrumb-active"
+          style={{ textDecoration: "none" }}
+        >
+          {location.pathname.startsWith("/encounter")
+            ? "Encounters"
+            : "Patients"}
+        </Link>
+        <span className="breadcrumb-arrow">&gt;</span>
+        <span className="breadcrumb-active">Patients Details</span>
+      </h1>
+
       <hr />
       <div className="container">
         <h3>Email : {rowData?.patient.email} </h3>

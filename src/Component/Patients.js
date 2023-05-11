@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const patientsUrl = "http://localhost:3000/data";
 
@@ -130,7 +130,7 @@ const Patients = () => {
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">
-              <a className="page-link" href="#" onClick={prePage}>
+              <a className="page-link" onClick={prePage}>
                 Prev
               </a>
             </li>
@@ -141,7 +141,7 @@ const Patients = () => {
               >
                 <a
                   className="page-link"
-                  href="#"
+                  // href="#"
                   onClick={() => setCurrentPage(i + 1)}
                 >
                   {n}
@@ -150,7 +150,7 @@ const Patients = () => {
             ))}
 
             <li className="page-item">
-              <a className="page-link" href="#" onClick={nextPage}>
+              <a className="page-link" onClick={nextPage}>
                 Next
               </a>
             </li>
