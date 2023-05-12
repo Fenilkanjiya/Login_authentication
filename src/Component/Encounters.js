@@ -33,7 +33,7 @@ const Encounter = () => {
     });
   };
 
-  const handlerFilter = async (e) => {  
+  const handlerFilter = async (e) => {
     let value = e.target.value;
     let filterData = encouterData.filter(
       (element) => element.consultation_type === value
@@ -80,16 +80,39 @@ const Encounter = () => {
     setFilterDataValue(filtred);
   };
 
-
   const selectionRange = {
     startDate: startDate,
     endDate: endDate,
     key: "selection",
   };
 
-  console.log("11111", encouterData)
-  
-//  console.log("encounter", data)
+  const TableData = () => {
+    return records.map((value) => {
+      const date = new Date(value.date_of_service).toLocaleDateString();
+      return (
+        <tr key={value.id} onClick={() => handleRowClick(value)}>
+          <td>{date}</td>
+          <td>{value.patient.address.home.full_name}</td>
+          <td>{value.consultation_type}</td>
+        </tr>
+      );
+    });
+  };
+
+  const TitleTbl = [
+    {
+      date: "Date of Service",
+      patient_name: "Patient name",
+      consultation_type: "Consultation type",
+    },
+  ];
+  const TableHeader = () => {
+    let header = Object.values(TitleTbl[0]);
+    return header.map((key, index) => {
+      return <th key={index}>{key}</th>;
+    });
+  };
+
   return (
     <>
       <h1>Encounters</h1>
@@ -121,20 +144,8 @@ const Encounter = () => {
       <br />
       <br />
       <section className="container">
-        {/* <table className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Date of Service</th>
-              <th scope="col">Patient name</th>
-              <th scope="col">Consultation type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <TableForm records={records} />
-          </tbody>
-        </table> */}
-        {/* <TableForm records={data} /> */}
-        <TableForm records={records} />
+        <TableForm header={TableHeader()} body={TableData()}/>
+
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">

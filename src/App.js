@@ -26,7 +26,7 @@ function App() {
       ) : (
         <>
           <Header />
-          <TableForm/>
+          {/* <TableForm /> */}
           <div className="row">
             <div className="col-lg-2">
               <Sidebar />

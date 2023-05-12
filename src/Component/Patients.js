@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import TableForm from "./TableForm";
 
 const patientsUrl = "http://localhost:3000/data";
 
@@ -68,6 +69,36 @@ const Patients = () => {
   const handlerRowClick = (value) => {
     navigate(`/patient/${value.id}`, { state: { data: value } });
   };
+
+  const TableData = () => {
+    return records.map((value) => {
+      return (
+        <tr key={value.id} onClick={() => handlerRowClick(value)}>
+          <td>{value.patient.email}</td>
+          <td>{value.patient.address.home.full_name}</td>
+          <td>{value.patient.gender}</td>
+          <td>{value.patient.referral_program}</td>
+        </tr>
+      );
+    });
+  };
+
+  const TitleTbl = [
+    {
+      email: "Email",
+      patient_name: "Patient name",
+      gender: "Gender",
+      referral_program: "Referral Program",
+    },
+  ];
+
+  const TableHeader = () => {
+    let header = Object.values(TitleTbl[0]);
+    return header.map((key, index) => {
+      return <th key={index}>{key}</th>;
+    });
+  };
+
   return (
     <>
       <h1>Patients</h1>
@@ -103,30 +134,8 @@ const Patients = () => {
       <br />
       <br />
       <section className="container">
-        <table className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Email</th>
-              <th scope="col">Patient name</th>
-              <th scope="col">Gender</th>
-              <th scope="col">referral Program</th>
-            </tr>
-          </thead>
-          {records.map((value) => {
-            return (
-              <>
-                <tbody>
-                  <tr key={value.id} onClick={() => handlerRowClick(value)}>
-                    <td>{value.patient.email}</td>
-                    <td>{value.patient.address.home.full_name}</td>
-                    <td>{value.patient.gender}</td>
-                    <td>{value.patient.referral_program}</td>
-                  </tr>
-                </tbody>
-              </>
-            );
-          })}
-        </table>
+        <TableForm header={TableHeader()} body={TableData()} />
+
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">
