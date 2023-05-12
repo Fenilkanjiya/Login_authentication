@@ -70,34 +70,17 @@ const Patients = () => {
     navigate(`/patient/${value.id}`, { state: { data: value } });
   };
 
-  const TableData = () => {
-    return records.map((value) => {
-      return (
-        <tr key={value.id} onClick={() => handlerRowClick(value)}>
-          <td>{value.patient.email}</td>
-          <td>{value.patient.address.home.full_name}</td>
-          <td>{value.patient.gender}</td>
-          <td>{value.patient.referral_program}</td>
-        </tr>
-      );
-    });
-  };
+  let values = [];
 
-  const TitleTbl = [
-    {
-      email: "Email",
-      patient_name: "Patient name",
-      gender: "Gender",
-      referral_program: "Referral Program",
-    },
-  ];
-
-  const TableHeader = () => {
-    let header = Object.values(TitleTbl[0]);
-    return header.map((key, index) => {
-      return <th key={index}>{key}</th>;
+  records.forEach((res) => {
+    values?.push({
+      Email: res.patient.email,
+      name: res.patient.address.home.full_name,
+      Gender: res.patient.gender,
+      Referral: res.patient.referral_program,
     });
-  };
+  });
+
 
   return (
     <>
@@ -134,7 +117,9 @@ const Patients = () => {
       <br />
       <br />
       <section className="container">
-        <TableForm header={TableHeader()} body={TableData()} />
+      {values?.length > 0 && (
+          <TableForm data={values}  />
+        )}
 
         <nav aria-label="Page navigation example">
           <ul className="pagination">

@@ -86,33 +86,21 @@ const Encounter = () => {
     key: "selection",
   };
 
-  const TableData = () => {
-    return records.map((value) => {
-      const date = new Date(value.date_of_service).toLocaleDateString();
-      return (
-        <tr key={value.id} onClick={() => handleRowClick(value)}>
-          <td>{date}</td>
-          <td>{value.patient.address.home.full_name}</td>
-          <td>{value.consultation_type}</td>
-        </tr>
-      );
-    });
-  };
+  let values = [];
 
-  const TitleTbl = [
-    {
-      date: "Date of Service",
-      patient_name: "Patient name",
-      consultation_type: "Consultation type",
-    },
-  ];
-  const TableHeader = () => {
-    let header = Object.values(TitleTbl[0]);
-    return header.map((key, index) => {
-      return <th key={index}>{key}</th>;
+  // let id = [];
+  records.forEach((res, index) => {
+    // id.push(index)
+    values.push({
+      id: res.id,
+      Date: new Date(res.date_of_service).toLocaleDateString(),
+      Name: res.patient.address.home.full_name,
+      Consultation: res.consultation_type,
     });
-  };
+  });
 
+
+  // console.log(id)
   return (
     <>
       <h1>Encounters</h1>
@@ -144,34 +132,31 @@ const Encounter = () => {
       <br />
       <br />
       <section className="container">
-        <TableForm header={TableHeader()} body={TableData()}/>
-
+        {values?.length > 0 && (
+          <TableForm data={values} onClick={() => handleRowClick()} />
+        )}
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">
-              <a className="page-link" href="#" onClick={prePage}>
+              <p className="page-link" onClick={prePage}>
                 Prev
-              </a>
+              </p>
             </li>
             {numbers.map((n, i) => (
               <li
                 className={`page-item ${currentPage === n ? "active" : ""}`}
                 key={i}
               >
-                <a
-                  className="page-link"
-                  // href="#"
-                  onClick={() => setCurrentPage(i + 1)}
-                >
+                <p className="page-link" onClick={() => setCurrentPage(i + 1)}>
                   {n}
-                </a>
+                </p>
               </li>
             ))}
 
             <li className="page-item">
-              <a className="page-link" onClick={nextPage}>
+              <p className="page-link" onClick={nextPage}>
                 Next
-              </a>
+              </p>
             </li>
           </ul>
         </nav>
