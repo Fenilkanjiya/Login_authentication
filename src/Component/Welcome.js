@@ -10,9 +10,9 @@ const Welcome = () => {
   return (
     <>
       <h1>Welcome {token}</h1>
-      <button className="btn btn-danger" onClick={handleLogout}>
+      {/* <button className="btn btn-danger" onClick={handleLogout}>
         Log Out
-      </button>
+      </button> */}
     </>
   );
 };

@@ -8,15 +8,6 @@ const patientsUrl = "http://localhost:3000/data";
 const Patients = () => {
   const [patientsdata, setPatientsData] = useState([]);
   const [filterDataValue, setFilterDataValue] = useState([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const records = filterDataValue.slice(firstIndex, lastIndex);
-  const numberOfPage = Math.ceil(filterDataValue.length / recordsPerPage);
-  const numbers = [...Array(numberOfPage + 1).keys()].slice(1);
-
   const navigate = useNavigate();
 
   const getPatients = async () => {
@@ -54,25 +45,13 @@ const Patients = () => {
     getPatients();
   }, []);
 
-  const prePage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const nextPage = () => {
-    if (currentPage !== numberOfPage) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
   const handlerRowClick = (value) => {
     navigate(`/patient/${value.id}`, { state: { data: value } });
   };
 
   let values = [];
 
-  records.forEach((res) => {
+  filterDataValue.forEach((res) => {
     values?.push({
       Email: res.patient.email,
       name: res.patient.address.home.full_name,
@@ -80,7 +59,6 @@ const Patients = () => {
       Referral: res.patient.referral_program,
     });
   });
-
 
   return (
     <>
@@ -117,39 +95,7 @@ const Patients = () => {
       <br />
       <br />
       <section className="container">
-      {values?.length > 0 && (
-          <TableForm data={values}  />
-        )}
-
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item">
-              <a className="page-link" onClick={prePage}>
-                Prev
-              </a>
-            </li>
-            {numbers.map((n, i) => (
-              <li
-                className={`page-item ${currentPage === n ? "active" : ""}`}
-                key={i}
-              >
-                <a
-                  className="page-link"
-                  // href="#"
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  {n}
-                </a>
-              </li>
-            ))}
-
-            <li className="page-item">
-              <a className="page-link" onClick={nextPage}>
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
+        {values?.length > 0 && <TableForm data={values} />}
       </section>
     </>
   );

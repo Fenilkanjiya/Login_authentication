@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axois from "axios";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import TableForm from "./TableForm";
+
+// import Paginate from "./pagination/Paginate";
 
 const encounterUrl = "http://localhost:3000/data";
 
@@ -12,18 +14,10 @@ const Encounter = () => {
   const [encouterData, setEncounterData] = useState([]);
   const [filterDataValue, setFilterDataValue] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const records = filterDataValue.slice(firstIndex, lastIndex);
-  const numberOfPage = Math.ceil(filterDataValue.length / recordsPerPage);
-  const numbers = [...Array(numberOfPage + 1).keys()].slice(1);
-
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const getEncouter = async () => {
     await axois.get(encounterUrl).then((res) => {
@@ -48,24 +42,11 @@ const Encounter = () => {
 
   useEffect(() => {
     getEncouter();
-    setCurrentPage(1);
   }, []);
 
-  const prePage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const nextPage = () => {
-    if (currentPage !== numberOfPage) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleRowClick = (value) => {
-    navigate(`/encounter/${value.id}`, { state: { data: value } });
-  };
+  // const handleRowClick = (values) => {
+  //   navigate(`/encounter/${values}`, { state: { data: values } });
+  // };
 
   const handleSelect = (date) => {
     let filtred = encouterData.filter((product) => {
@@ -89,18 +70,16 @@ const Encounter = () => {
   let values = [];
 
   // let id = [];
-  records.forEach((res, index) => {
+  filterDataValue.forEach((res, index) => {
     // id.push(index)
     values.push({
-      id: res.id,
+      // id: res.id,
       Date: new Date(res.date_of_service).toLocaleDateString(),
       Name: res.patient.address.home.full_name,
       Consultation: res.consultation_type,
     });
   });
 
-
-  // console.log(id)
   return (
     <>
       <h1>Encounters</h1>
@@ -132,34 +111,7 @@ const Encounter = () => {
       <br />
       <br />
       <section className="container">
-        {values?.length > 0 && (
-          <TableForm data={values} onClick={() => handleRowClick()} />
-        )}
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item">
-              <p className="page-link" onClick={prePage}>
-                Prev
-              </p>
-            </li>
-            {numbers.map((n, i) => (
-              <li
-                className={`page-item ${currentPage === n ? "active" : ""}`}
-                key={i}
-              >
-                <p className="page-link" onClick={() => setCurrentPage(i + 1)}>
-                  {n}
-                </p>
-              </li>
-            ))}
-
-            <li className="page-item">
-              <p className="page-link" onClick={nextPage}>
-                Next
-              </p>
-            </li>
-          </ul>
-        </nav>
+        {values?.length > 0 && <TableForm data={values} />}
       </section>
     </>
   );

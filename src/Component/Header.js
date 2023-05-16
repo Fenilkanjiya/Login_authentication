@@ -3,6 +3,11 @@ import React from "react";
 const Header = () => {
 
   const name = localStorage.getItem("name");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload(false);
+  };
   return (
     <>
       <nav className="navbar bg-body-tertiary">
@@ -15,7 +20,11 @@ const Header = () => {
               height="24"
               className="d-inline-block align-text-top"
             />
-            Welcome {name}
+          
+          </a>
+          <a className="navbar-brand" href="#">
+            <span className="fs-3 me-3">{name}</span>
+            <button className="btn btn-danger" onClick={handleLogout}>Log Out</button>
           </a>
         </div>
       </nav>
