@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import TableForm from "./TableForm";
+import TableForm from "../pages/TableForm";
 
 const patientsUrl = "http://localhost:3000/data";
 

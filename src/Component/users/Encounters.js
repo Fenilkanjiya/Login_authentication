@@ -4,7 +4,7 @@ import axois from "axios";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import TableForm from "./TableForm";
+import TableForm from "../pages/TableForm";
 
 // import Paginate from "./pagination/Paginate";
 
@@ -13,6 +13,8 @@ const encounterUrl = "http://localhost:3000/data";
 const Encounter = () => {
   const [encouterData, setEncounterData] = useState([]);
   const [filterDataValue, setFilterDataValue] = useState([]);
+
+  const [values, setValues] = useState([]);
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -42,6 +44,7 @@ const Encounter = () => {
 
   useEffect(() => {
     getEncouter();
+    passData();
   }, []);
 
   // const handleRowClick = (values) => {
@@ -67,19 +70,23 @@ const Encounter = () => {
     key: "selection",
   };
 
-  let values = [];
+  // let values = [];
 
   // let id = [];
-  filterDataValue.forEach((res, index) => {
-    // id.push(index)
-    values.push({
+  const passData = () => {
+    filterDataValue.map((res, index) => {
+      setValues(res);
+      // id.push(index)
+      // values.push(
+      //   res
       // id: res.id,
-      Date: new Date(res.date_of_service).toLocaleDateString(),
-      Name: res.patient.address.home.full_name,
-      Consultation: res.consultation_type,
+      // Date: new Date(res.date_of_service).toLocaleDateString(),
+      // Name: res.patient.address.home.full_name,
+      // Consultation: res.consultation_type,
+      // );
     });
-  });
-
+  };
+  console.log(values);
   return (
     <>
       <h1>Encounters</h1>

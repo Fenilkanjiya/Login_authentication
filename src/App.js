@@ -1,14 +1,14 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Component/Login";
-import Header from "./Component/Header";
-import Encounter from "./Component/Encounters";
-import Patients from "./Component/Patients";
-import Sidebar from "./Component/Sidebar";
-import Welcome from "./Component/Welcome";
-import Details from "./Component/Details";
+import Header from "./Component/pages/Header";
+import Encounter from "./Component/users/Encounters";
+import Patients from "./Component/users/Patients";
+import Sidebar from "./Component/pages/Sidebar";
+import Welcome from "./Component/pages/Welcome";
+import Details from "./Component/details/Details";
 import { useEffect, useState } from "react";
-import TableForm from "./Component/TableForm";
+import TableForm from "./Component/pages/TableForm";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -35,9 +35,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Welcome />} />
                 <Route path="/encounters" element={<Encounter />} />
-                <Route path="/Encounter/:id" element={<Details />} />
+                <Route path="/patientDetails/:id" element={<Details />} />
                 <Route path="/patients" element={<Patients />} />
-                <Route path="/patient/:id" element={<Details />} />
+                <Route path="/patientDetails/:id" element={<Details />} />
               </Routes>
             </div>
           </div>

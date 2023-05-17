@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Paginate from "./pagination/Paginate";
+import Paginate from "../pagination/Paginate";
 import { useNavigate } from "react-router-dom";
 
 const TableForm = (props) => {
@@ -30,7 +30,7 @@ const TableForm = (props) => {
   };
 
   const handleRowClick = (value) => {
-    navigate(`/encounter/${value.id}`, { state: { data: value } });
+    navigate(`/patientDetails/${value.id}`, { state: { data: value } });
   };
 
   return (
