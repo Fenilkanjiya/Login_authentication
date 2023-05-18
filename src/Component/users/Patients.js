@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import TableForm from "../pages/TableForm";
+import TableForm from "../table/TableForm";
 
 const patientsUrl = "http://localhost:3000/data";
 
 const Patients = () => {
   const [patientsdata, setPatientsData] = useState([]);
   const [filterDataValue, setFilterDataValue] = useState([]);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    getPatients();
+  }, []);
 
   const getPatients = async () => {
     await axios.get(patientsUrl).then((res) => {
@@ -41,13 +43,6 @@ const Patients = () => {
       setFilterDataValue(filterData);
     }
   };
-  useEffect(() => {
-    getPatients();
-  }, []);
-
-  const handlerRowClick = (value) => {
-    navigate(`/patient/${value.id}`, { state: { data: value } });
-  };
 
   let values = [];
 
@@ -57,6 +52,7 @@ const Patients = () => {
       name: res.patient.address.home.full_name,
       Gender: res.patient.gender,
       Referral: res.patient.referral_program,
+      id: res.id,
     });
   });
 
@@ -95,7 +91,7 @@ const Patients = () => {
       <br />
       <br />
       <section className="container">
-        {values?.length > 0 && <TableForm data={values} />}
+        {values?.length > 0 && <TableForm data={values} id={filterDataValue} />}
       </section>
     </>
   );

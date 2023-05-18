@@ -1,16 +1,15 @@
 import React from "react";
-import { useLocation, Link } from "react-router-dom";
-import "./../breadcrums.css";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import "./breadcrums.css";
 
 const Details = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const rowData = location?.state?.data;
 
-  const path = location.pathname.startsWith("/encounter")
-    ? "/encounters"
-    : "/patients";
+  const path = navigate(-1)
 
-  return (
+  return (  
     <div>
       <h1>
         <Link
@@ -18,23 +17,24 @@ const Details = () => {
           className="breadcrumb-active"
           style={{ textDecoration: "none" }}
         >
-          {location.pathname.startsWith("/encounter")
-            ? "Encounters"
-            : "Patients"}
+          {location.pathname.startsWith("/patientDetails")
+            ? "Patients"
+            : "Encounters"}
         </Link>
+
         <span className="breadcrumb-arrow">&gt;</span>
         <span className="breadcrumb-active">Patients Details</span>
       </h1>
 
       <hr />
       <div className="container">
-        <h3>Email : {rowData?.Email} </h3>
+        <h3>Email : {rowData?.patient?.email} </h3>
         <hr />
         <h3>Full Name : {rowData?.patient?.address?.home?.full_name}</h3>
         <hr />
         <h3>Date of Birth : {rowData?.patient?.dob}</h3>
         <hr />
-        <h3>Gender : {rowData?.Gender}</h3>
+        <h3>Gender : {rowData?.patient?.gender}</h3>
       </div>
     </div>
   );

@@ -10,9 +10,9 @@ const Header = () => {
   };
   return (
     <>
-      <nav className="navbar bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+      <nav className="navbar bg-body-tertiary navbar-light">
+        < div className="container-fluid">
+          <a className="navbar-brand">
             <img
               src="logo512.png"
               alt="Logo"
@@ -22,12 +22,13 @@ const Header = () => {
             />
           
           </a>
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand">
             <span className="fs-3 me-3">{name}</span>
             <button className="btn btn-danger" onClick={handleLogout}>Log Out</button>
           </a>
         </div>
       </nav>
+
     </>
   );
 };
